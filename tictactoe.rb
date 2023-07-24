@@ -29,7 +29,7 @@ class Board
         # print each slot, with a line between each
         3.times do
 
-          print @game_board[slot]
+          print " #{@game_board[slot]} "
 
           unless (slot + 1) % 3 == 0
             print '|'
@@ -39,7 +39,7 @@ class Board
         end
       else
         puts
-        print "-+-+-"
+        print "---+---+---"
         puts
       end
       row += 1

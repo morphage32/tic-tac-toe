@@ -1,9 +1,10 @@
 class Player
   attr_reader :name, :letter
 
-  def initialize(name, letter)
-    @name = name
+  def initialize(letter)
     @letter = letter
+    puts "Please enter a name for player \"#{letter}\":"
+    @name = gets
   end
 
 end
@@ -47,11 +48,13 @@ class Game
   end
 
   def play_turn(player)
-
+    
   end
 
 
 end
 
+player1 = Player.new("X")
+player2 = Player.new("O")
 game1 = Game.new()
 game1.build_board

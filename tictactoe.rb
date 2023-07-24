@@ -106,10 +106,16 @@ def game()
   turn = 1
   victor = 'none'
 
+  if rand(1..2) == 1
+    current_player = player1
+  else
+    current_player = player2
+  end
+
   while turn < 10 && victor == 'none'
     board.build_board
 
-    if turn.odd?
+    if current_player == player2
       current_player = player1
     else
       current_player = player2

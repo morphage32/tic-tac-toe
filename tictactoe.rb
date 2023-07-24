@@ -16,7 +16,7 @@ end
 class Board
   
   def initialize()
-    @game_board = Array.new(9)
+    @game_board = ["1","2","3","4","5","6","7","8","9"]
   end
 
   def build_board()
@@ -28,11 +28,8 @@ class Board
       if row.odd?
         # print each slot, with a line between each
         3.times do
-          if @game_board[slot] == nil
-            print slot + 1
-          else
-            print @game_board[slot]
-          end
+
+          print @game_board[slot]
 
           unless (slot + 1) % 3 == 0
             print '|'
@@ -60,7 +57,7 @@ class Board
 
       # Make sure input is a number, between 1-9, and not already taken in array
       unless (selection.is_a? Numeric) && (selection > 0 && selection < 10) &&
-        (@game_board[selection - 1] == nil)
+        (@game_board[selection - 1] != 'X' && @game_board[selection - 1] != 'O')
         puts "Sorry #{name}, #{selection} is not an open slot. Please try again:"
         selection = nil
       else
@@ -70,12 +67,35 @@ class Board
     end
   end
 
+  def declare_winner(turn)
+
+  end
+
 end
 
-player1 = Player.new("X")
-player2 = Player.new("O")
-board1 = Board.new()
-board1.build_board
-player1.turn_prompt()
-board1.update_board(player1.name, player1.letter)
-board1.build_board
+def game()
+
+  player1 = Player.new("X")
+  player2 = Player.new("O")
+  board = Board.new()
+  turn = 1
+  victor = 'none'
+
+  while turn < 10 && victor == 'none'
+    board.build_board
+
+    if turn.odd?
+      current_player = player1
+    else
+      current_player = player2
+    end
+
+    current_player.turn_prompt()
+    board.update_board(current_player.name, current_player.letter)
+
+    turn += 1
+  end
+
+end
+
+game()

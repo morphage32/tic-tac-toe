@@ -4,12 +4,16 @@ class Player
   def initialize(letter)
     @letter = letter
     puts "Please enter a name for player \"#{letter}\":"
-    @name = gets
+    @name = gets.chomp
+  end
+
+  def turn_prompt()
+    puts "\nIt's #{name}'s turn! Enter the number of the slot you would like to place your \"#{letter}\":"
   end
 
 end
 
-class Game
+class Board
   
   def initialize()
     @game_board = Array.new(9)
@@ -36,25 +40,42 @@ class Game
 
           slot += 1
         end
-        row += 1
       else
         puts
         print "-+-+-"
         puts
-        row += 1
       end
+      row += 1
     end
     puts
   end
 
-  def play_turn(player)
-    
-  end
+  def update_board(name, letter)
+    # arguments are the player object's name and letter
+    selection = nil
 
+    while selection == nil do
+      selection = gets.chomp
+      selection = selection.to_i
+
+      # Make sure input is a number, between 1-9, and not already taken in array
+      unless (selection.is_a? Numeric) && (selection > 0 && selection < 10) &&
+        (@game_board[selection - 1] == nil)
+        puts "Sorry #{name}, #{selection} is not an open slot. Please try again:"
+        selection = nil
+      else
+        puts "#{name} placed an #{letter} in slot #{selection}!"
+        @game_board[selection - 1] = letter
+      end
+    end
+  end
 
 end
 
 player1 = Player.new("X")
 player2 = Player.new("O")
-game1 = Game.new()
-game1.build_board
+board1 = Board.new()
+board1.build_board
+player1.turn_prompt()
+board1.update_board(player1.name, player1.letter)
+board1.build_board

@@ -67,7 +67,32 @@ class Board
     end
   end
 
-  def declare_winner(turn)
+  def declare_winner()
+    # check horizontally
+    i = 0
+    3.times do
+      if (@game_board[i] == @game_board[i + 1]) && (@game_board[i + 1] == (@game_board[i + 2]))
+        return @game_board[i]
+      end
+      i += 3
+    end
+
+    #check vertically
+    i = 0
+    3.times do
+      if (@game_board[i] == @game_board[i + 3]) && (@game_board[i + 3] == @game_board[i + 6])
+        return @game_board[i]
+      end
+      i += 1
+    end
+
+    #check both diagonals
+    if (@game_board[0] == @game_board[4] && @game_board[4] == @game_board[8]) ||
+      (@game_board[2] == @game_board[4] && @game_board[4] == @game_board[6])
+      return @game_board[4] # diagonal winner will always be in the center slot
+    end
+
+    return 'none'
 
   end
 
@@ -92,9 +117,22 @@ def game()
 
     current_player.turn_prompt()
     board.update_board(current_player.name, current_player.letter)
+    victor = board.declare_winner()
 
     turn += 1
   end
+
+  board.build_board
+  puts
+
+  case victor
+    when 'X'
+      puts "#{player1.name} has won the game!"
+    when 'O'
+      puts "#{player2.name} has won the game!"
+    else
+      puts "The game has ended in a tie!"
+    end
 
 end
 
